@@ -1,0 +1,74 @@
+body {
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.container-coop {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+h2.title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.table-coop {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-coop th, .table-coop td {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.table-coop th {
+    background-color: #2980b9;
+    color: white;
+}
+
+.btn-custom {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-add {
+    background-color: #27ae60;
+    color: white;
+}
+
+.btn-edit {
+    background-color: #f39c12;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #c0392b;
+    color: white;
+}
+
+.btn-show {
+    background-color: #2980b9;
+    color: white;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #3c763d;
+    border: 1px solid #d6e9c6;
+}

@@ -1,0 +1,69 @@
+@extends('layouts.app')
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/cooperative.css') }}">
+@endsection
+@section('content')
+<div class="container">
+    <h1 style="text-align:center;">Liste des coopératives</h1>
+
+    <a href="{{ route('cooperatives.create') }}" class="btn btn-primary mb-3">Ajouter une Coopérative</a>
+
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <table border=1 class="table table-bordered">
+        <thead>
+                <th>Numéro coopérative</th>
+                <th>Nom en français</th>
+                <th>Nom en Arabe</th>
+                <th>Adresse</th>
+                <th>Téléphone</th>
+                <th>Actions</th>
+                <th>Telephonne</th>
+                <th>NumInscrip</th>
+                <th>DateCreation</th>
+                <th>NumAnalytique</th>
+                <th>NbrColl</th>
+                <th>Secteur</th>
+                <th>Catégorie</th>
+                
+                <th>Informations</th>
+                <th>IdComm</th>
+                <th>DejaBeneficie</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($cooperatives as $coop)
+                <tr>
+
+                    <td>{{ $coop->NumCop }}</td>
+                    <td>{{ $coop->NomFr ?? '-' }}</td>
+                    <td>{{ $coop->NomAr?? '-' }}</td>
+                    <td>{{ $coop->Telephonne ?? '-' }}</td>
+                    <td>{{ $coop->NumInscrip ?? '-' }}</td>
+                    <td>{{ $coop->DateCreation ?? '-' }}</td>
+                    <td>{{ $coop->NumAnalytique?? '-' }}</td>
+                    <td>{{ $coop->NbrColl?? '-' }}</td>
+                    <td>{{ $coop->IdComm?? '-' }}</td>
+                    <td>{{ $coop->Secteur?? '-' }}</td>
+                    <td>{{ $coop->Catégorie ?? '-' }}</td>
+                    <td>{{ $coop->Adresse?? '-' }}</td>
+                    <td>{{ $coop->Informations?? '-' }}</td>
+                    <td>{{ $coop->Informations?? '-' }}</td>
+                    <td>{{ $coop->DejaBeneficie?? '-' }}</td>
+                    <td>
+                        <a href="{{ route('cooperatives.show', $coop->Id) }}" class="btn btn-info btn-sm">Voir</a>
+                        <a href="{{ route('cooperatives.edit', $coop->Id) }}" class="btn btn-warning btn-sm">Éditer</a>
+                        <form action="{{ route('cooperatives.destroy', $coop->Id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette coopérative ?')">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+@endsection
