@@ -1,23 +1,23 @@
 <?php
 
+// app/Models/Membre.php
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Cooperative;
 class Membre extends Model
 {
-    use HasFactory;
     protected $table = 'membre';
     protected $primaryKey = 'Id';
+    public $timestamps = false;
+
     protected $fillable = [
-        'NomFr',
-        'NomAr',
-        'CNI',
-        'Telephonne',
-        'Email',
-        'Poste'
+        'NomFr', 'NomAr', 'CNI', 'Telephonne', 'Email', 'Poste', 'id_coop'
     ];
 
-    public $timestamps = false;
+    public function cooperative()
+    {
+        return $this->belongsTo(Cooperative::class, 'id_coop', 'Id');
+    }
 }

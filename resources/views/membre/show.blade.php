@@ -32,6 +32,7 @@
                 <th>Poste</th>
                 <td>{{ $membre->Poste }}</td>
             </tr>
+            <li class="list-group-item"><strong>ID Coopérative :</strong> {{ $membre->id_coop }}</li>
         </table>
         <div class="mt-3">
             <a href="{{ route('membres.index') }}" class="btn btn-primary"><i class="bi bi-arrow-left-circle"style="margin-right: 5px;"></i> Retour à la liste</a>

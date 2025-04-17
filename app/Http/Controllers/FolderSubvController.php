@@ -2,87 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\FolderSubv;
 use App\Models\Subvention;
+use Illuminate\Http\Request;
 
 class FolderSubvController extends Controller
 {
     public function index()
     {
-        $folderSubvs = FolderSubv::with('subvention')->get(); // Récupérer avec la relation Subvention
-        return view('folder_subv.index', compact('folderSubvs'));
+        $folders = FolderSubv::with('subvention')->get();
+        return view('folder_subv.index', compact('folders'));
     }
-    
 
-    // Afficher le formulaire de création
     public function create()
     {
-        $subventions = Subvention::all(); // Pour afficher les subventions dans le select
+        $subventions = Subvention::all();
         return view('folder_subv.create', compact('subventions'));
     }
 
-    // Enregistrer un nouveau FolderSubv
     public function store(Request $request)
     {
         $request->validate([
-            'Nom' => 'required|string|max:255',
-            'Size' => 'required|integer',
-            'idSubv' => 'required|exists:subventions,id', // Validation pour idSubv
-            'Observation' => 'nullable|string',
+            'Nom' => 'nullable|string|max:500',
+            'Size' => 'nullable|numeric',
+            'IdSubv' => 'required|exists:subvention,Id',
+            'Observation' => 'nullable|string|max:1000',
         ]);
 
-        FolderSubv::create([
-            'Nom' => $request->Nom,
-            'Size' => $request->Size,
-            'idSubv' => $request->idSubv,
-            'Observation' => $request->Observation,
-        ]);
-
-        return redirect()->route('folder_subv.index')->with('success', 'Folder Subvention ajouté avec succès');
+        FolderSubv::create($request->all());
+        return redirect()->route('folder_subvs.index')->with('success', 'Dossier ajouté avec succès.');
     }
 
-    // Afficher les détails d'un FolderSubv spécifique
     public function show($id)
     {
-        $folderSubv = FolderSubv::with('subvention')->findOrFail($id);
-        return view('folder_subv.show', compact('folderSubv'));
+        $folder = FolderSubv::findOrFail($id);
+        return view('folder_subv.show', compact('folder'));
     }
 
-    // Afficher le formulaire de modification d'un FolderSubv existant
     public function edit($id)
     {
-        $folderSubv = FolderSubv::findOrFail($id);
+        $folder = FolderSubv::findOrFail($id);
         $subventions = Subvention::all();
-        return view('folder_subv.edit', compact('folderSubv', 'subventions'));
+        return view('folder_subv.edit', compact('folder', 'subventions'));
     }
 
-    // Mettre à jour un FolderSubv
     public function update(Request $request, $id)
     {
         $request->validate([
-            'Nom' => 'required|string|max:255',
-            'Size' => 'required|integer',
-            'idSubv' => 'required|exists:subventions,id',
-            'Observation' => 'nullable|string',
+            'Nom' => 'nullable|string|max:500',
+            'Size' => 'nullable|numeric',
+            'IdSubv' => 'required|exists:subvention,Id',
+            'Observation' => 'nullable|string|max:1000',
         ]);
 
-        $folderSubv = FolderSubv::findOrFail($id);
-        $folderSubv->update([
-            'Nom' => $request->Nom,
-            'Size' => $request->Size,
-            'idSubv' => $request->idSubv,
-            'Observation' => $request->Observation,
-        ]);
+        $folder = FolderSubv::findOrFail($id);
+        $folder->update($request->all());
 
-        return redirect()->route('folder_subv.index')->with('success', 'Folder Subvention mis à jour avec succès');
+        return redirect()->route('folder_subvs.index')->with('success', 'Dossier mis à jour.');
     }
 
-    // Supprimer un FolderSubv
     public function destroy($id)
     {
-        $folder_Subv = FolderSubv::findOrFail($id);
-        $folder_Subv->delete();
-        return redirect()->route('folder_subv.index')->with('success', 'Folder Subvention supprimé avec succès');
+        FolderSubv::destroy($id);
+        return redirect()->route('folder_subvs.index')->with('success', 'Dossier supprimé.');
     }
 }

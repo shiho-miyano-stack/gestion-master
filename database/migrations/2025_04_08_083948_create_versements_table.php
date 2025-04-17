@@ -12,13 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('versement', function (Blueprint $table) {
-            $table->id();  // Crée une colonne "id" en tant que clé primaire auto-incrémentée
-            $table->date('DateVers');  // Crée la colonne "DateVers" pour la date du versement
-            $table->float('Montant');  // Crée la colonne "Montant" pour stocker le montant du versement
-            $table->unsignedBigInteger('IdSubv');  // Crée la colonne "IdSubv" pour la clé étrangère vers la table "subvention"
-            
-            // Définition de la clé étrangère
-            $table->foreignId('IdSubv')->constrained('subvention')->onDelete('cascade');
+            $table->id('Id');
+            $table->date('DateVers')->nullable();
+            $table->float('Montant')->nullable();
+            $table->unsignedBigInteger('IdSubv');
+            $table->date('periode_debut')->nullable();
+            $table->date('periode_fin')->nullable();
+            $table->string('mode_paiement', 100)->nullable();
+            $table->string('reference_paiement', 100)->nullable();
+            $table->text('observation')->nullable();
+            $table->timestamps();
+
+            $table->foreign('IdSubv')->references('Id')->on('subvention')->onDelete('cascade');
             
             $table->timestamps(); 
         });

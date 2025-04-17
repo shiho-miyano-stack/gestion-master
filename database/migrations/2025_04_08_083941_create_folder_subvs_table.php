@@ -1,34 +1,26 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateFolderSubvTable extends Migration
 {
-    
-    public function up(): void
+    public function up()
     {
         Schema::create('folder_subv', function (Blueprint $table) {
-            $table->id();  
-            $table->string('Nom'); 
-            $table->float('Size')->nullable();  
-            $table->unsignedBigInteger('IdSubv'); 
-            $table->string('Observation')->nullable();  
+            $table->increments('Id');
+            $table->string('Nom', 500)->nullable();
+            $table->float('Size')->nullable();
+            $table->unsignedInteger('IdSubv');
+            $table->string('Observation', 1000)->nullable();
 
-            
-            
-            $table->foreignId('IdSubv')->constrained('subvention')->onDelete('cascade');
-
-           
-            $table->timestamps();
-
+            // ✅ Clé étrangère vers la table `subvention`
+            $table->foreign('IdSubv')->references('Id')->on('subvention')->onDelete('cascade');
         });
     }
 
-    
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('folder_subv');
     }
-};
+}

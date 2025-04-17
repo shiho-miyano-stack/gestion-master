@@ -13,10 +13,14 @@ class Versement extends Model
     protected $table = 'versement';
     protected $primaryKey = 'Id';
     protected $fillable = [
-        'Id',
         'DateVers',
         'Montant',
-        'IdSubv'
+        'IdSubv',
+        'periode_debut',
+        'periode_fin',
+        'mode_paiement',
+        'reference_paiement',
+        'observation'
     ];
     public function subvention()
     {

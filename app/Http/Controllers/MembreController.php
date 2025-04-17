@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 namespace App\Http\Controllers;
 
 use App\Models\Membre;
+use App\Models\Cooperative;
 use Illuminate\Http\Request;
 
 class MembreController extends Controller
@@ -36,6 +37,7 @@ class MembreController extends Controller
             'Telephonne' => 'required|string|max:15',
             'Email' => 'required|email|max:100',
             'Poste' => 'required|string|max:50',
+            'id_coop' => 'nullable|exists:cooperative,Id',
         ]);
 
        
@@ -80,6 +82,7 @@ class MembreController extends Controller
             'Telephonne' => 'required|string|max:15',
             'Email' => 'required|email|max:100',
             'Poste' => 'required|string|max:50',
+            'id_coop' => 'nullable|exists:cooperative,Id',
         ]);
 
     

@@ -25,6 +25,10 @@
         <label for="Email">Email</label>
         <input type="email" name="Email" class="form-control" required>
     </div>
+    <div class="form-group">
+            <label>ID Coopérative (optionnel)</label>
+            <input type="number" name="id_coop" class="form-control">
+        </div>
 
     <div class="form-group">
         <label for="Poste">Le poste</label>

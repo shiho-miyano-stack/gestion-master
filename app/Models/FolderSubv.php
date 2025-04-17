@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class FolderSubv extends Model
 {
-    use HasFactory;
     protected $table = 'folder_subv';
     protected $primaryKey = 'Id';
+    public $timestamps = false;
+
     protected $fillable = [
         'Nom',
         'Size',
         'IdSubv',
-        'Observation'
+        'Observation',
     ];
+
+    // Relation avec Subvention
     public function subvention()
     {
-            return $this->belongsTo(Subvention::class, 'IdSubv');}
-
-    public $timestamps = false;
+        return $this->belongsTo(Subvention::class, 'IdSubv', 'Id');
+    }
 }

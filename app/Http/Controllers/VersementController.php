@@ -25,17 +25,17 @@ class VersementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'DateVers' => 'required|date',
-            'Montant' => 'required|numeric',
+            'DateVers' => 'nullable|date',
+            'Montant' => 'nullable|numeric',
             'IdSubv' => 'required|exists:subvention,Id',
+            'periode_debut' => 'nullable|date',
+            'periode_fin' => 'nullable|date',
+            'mode_paiement' => 'nullable|string|max:100',
+            'reference_paiement' => 'nullable|string|max:100',
+            'observation' => 'nullable|string',
         ]);
 
-        Versement::create([
-            'DateVers' => $request->DateVers,
-            'Montant' => $request->Montant,
-            'IdSubv' => $request->IdSubv,
-        ]);
-
+        Versement::create($request->all());
         return redirect()->route('versements.index')->with('success', 'Versement ajouté avec succès');
     }
 
@@ -58,17 +58,18 @@ class VersementController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'DateVers' => 'required|date',
-            'Montant' => 'required|numeric',
+            'DateVers' => 'nullable|date',
+            'Montant' => 'nullable|numeric',
             'IdSubv' => 'required|exists:subvention,Id',
+            'periode_debut' => 'nullable|date',
+            'periode_fin' => 'nullable|date',
+            'mode_paiement' => 'nullable|string|max:100',
+            'reference_paiement' => 'nullable|string|max:100',
+            'observation' => 'nullable|string',
         ]);
 
         $versement = Versement::findOrFail($id);
-        $versement->update([
-            'DateVers' => $request->DateVers,
-            'Montant' => $request->Montant,
-            'IdSubv' => $request->IdSubv,
-        ]);
+        $versement->update($request->all());
 
         return redirect()->route('versements.index')->with('success', 'Versement mis à jour avec succès');
     }

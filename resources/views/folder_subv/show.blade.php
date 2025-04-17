@@ -1,28 +1,31 @@
+<!-- resources/views/folder_subv/show.blade.php -->
 @extends('layouts.app')
 
 @section('content')
 <div class="container">
-    <h1>Détails du Folder Subvention</h1>
+    <h1 class="mb-4">Détails du Dossier</h1>
 
-    <div class="card">
-        <div class="card-body">
-            <p><strong>ID:</strong> {{ $folderSubv->Id }}</p>
-            <p><strong>Nom:</strong> {{ $folderSubv->Nom }}</p>
-            <p><strong>Taille:</strong> {{ $folderSubv->Size }}</p>
-            <p><strong>ID Subv:</strong> {{ $folderSubv->idSubv }}</p>
-            <p><strong>Observation:</strong> {{ $folderSubv->Observation }}</p>
+    <table class="table table-bordered">
+        <tr>
+            <th>Nom du Dossier</th>
+            <td>{{ $folder->Nom }}</td>
+        </tr>
+        <tr>
+            <th>Taille (Mo)</th>
+            <td>{{ $folder->Size }}</td>
+        </tr>
+        <tr>
+            <th>Subvention</th>
+            <td>{{ $folder->subvention->Libelle }}</td>
+        </tr>
+        <tr>
+            <th>Observation</th>
+            <td>{{ $folder->Observation }}</td>
+        </tr>
+    </table>
 
-            
-            @if($folderSubv->subvention)
-        <p><strong>Type de Subvention:</strong> {{ $folderSubv->subvention->Id }}</p>
-         @else
-        <p><strong>Type de Subvention:</strong> Aucune subvention associée.</p>
-         @endif
-           
-        </div>
-    </div>
-
-    <a href="{{ route('folder_subvs.index') }}" class="btn btn-primary mt-3">Retour à la liste</a>
+    <a href="{{ route('folder_subvs.index') }}" class="btn btn-primary">Retour à la liste</a>
 </div>
 @endsection
+
 

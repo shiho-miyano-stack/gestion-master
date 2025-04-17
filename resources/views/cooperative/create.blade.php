@@ -38,114 +38,87 @@
           </div>
         </div>
       </div>
-    <form action="{{ route('cooperatives.store') }}" method="POST" >
-    @csrf
-    <div class="form-group">
-        <label for="NumCop">Numéro de Coopérative</label>
-        <input type="number" name="NumCop" class="form-control"  required>
+
+      <h1 class="mb-4">Ajouter une Coopérative</h1>
+    <form action="{{ route('cooperatives.store') }}" method="POST">
+        @csrf
+
+      <div class="row">
+    <div class="col-md-6 mb-3">
+        <label>Numéro Coopérative</label>
+        <input type="number" name="NumCop" class="form-control" value="{{ old('NumCop', $cooperative->NumCop ?? '') }}">
     </div>
-    <div class="form-group">
-        <label for="NomFr">Nom (Français)</label>
-        <input type="text" name="NomFr" class="form-control"required>
+
+    <div class="col-md-6 mb-3">
+        <label>Nom Français</label>
+        <input type="text" name="NomFr" class="form-control" required value="{{ old('NomFr', $cooperative->NomFr ?? '') }}">
     </div>
-    <div class="form-group">
-        <label for="NomAr">Nom (Arabe)</label>
-        <input type="text" name="NomAr" class="form-control"  required>
+
+    <div class="col-md-6 mb-3">
+        <label>Nom Arabe</label>
+        <input type="text" name="NomAr" class="form-control" required value="{{ old('NomAr', $cooperative->NomAr ?? '') }}">
     </div>
-    <div class="form-group">
-        <label for="Adresse">Adresse</label>
-        <input type="text" name="Adresse" value="{{ old('NomAdresse') }}" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="Telephonne">Téléphone</label>
-        <input type="text" name="Telephonne" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="NbrMem">Nombre des membres</label>
-        <input type="number" name="NbrMem" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="NbrColl">Nombre des Collaborateurs</label>
-        <input type="number" name="NbrColl" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="DateCreation">Date de Création</label>
-        <input type="date" name="DateCreation" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="NumInscrip">Numéro d'Inscription</label>
-        <input type="text" name="NumInscrip" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="NumAnalytique">Numéro Analytique</label>
-        <input type="text" name="NumAnalytique" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="IdComm">Province</label>
-        <select name="IdProv" class="form-control" required>
-            <option value="">Sélectionner une province</option>
-            @foreach ($provinces as $province)
-                <option value="{{ $province->Id }}">{{ $province->Libelle}}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="IdComm">Commune</label>
+
+    <div class="col-md-6 mb-3">
+        <label>Commune</label>
         <select name="IdComm" class="form-control" required>
-            <option value="">Sélectionner une commune</option>
-            @foreach ($communes as $commune)
-                <option value="{{ $commune->Id }}">{{ $commune->Libelle}}</option>
+            <option value="">-- Sélectionner --</option>
+            @foreach($communes as $commune)
+                <option value="{{ $commune->Id }}" {{ old('IdComm', $cooperative->IdComm ?? '') == $commune->Id ? 'selected' : '' }}>
+                    {{ $commune->Libelle }}
+                </option>
             @endforeach
         </select>
     </div>
-    <div class="form-group">
-        <label for="IdColl">Collaborateur</label>
-        <select name="IdColl" class="form-control" required>
-            <option value="">Sélectionner des collaborateurs</option>
-            @foreach ($collaborateurs as $collaborateur)
-                <option value="{{ $collaborateur->Id }}">{{ $collaborateur->Id}}</option>
+
+    <div class="col-md-6 mb-3">
+        <label>Secteur</label>
+        <select name="Secteur" class="form-control">
+            <option value="">-- Sélectionner --</option>
+            @foreach($secteurs as $secteur)
+                <option value="{{ $secteur->Id }}" {{ old('Secteur', $cooperative->Secteur ?? '') == $secteur->Id ? 'selected' : '' }}>
+                    {{ $secteur->Libelle }}
+                </option>
             @endforeach
         </select>
     </div>
-    <div class="form-group">
-        <label for="IdMem">Membre</label>
-        <select name="IdMem" class="form-control" required>
-            <option value="">Sélectionner des membres</option>
-            @foreach ($membres as $membre)
-                <option value="{{ $membre->Id }}">{{ $membre->Id}}</option>
+
+    <div class="col-md-6 mb-3">
+        <label>Catégorie</label>
+        <select name="Categorie" class="form-control">
+            <option value="">-- Sélectionner --</option>
+            @foreach($categories as $categorie)
+                <option value="{{ $categorie->Id }}" {{ old('Categorie', $cooperative->Categorie ?? '') == $categorie->Id ? 'selected' : '' }}>
+                    {{ $categorie->Libelle }}
+                </option>
             @endforeach
         </select>
     </div>
-    <div class="form-group">
-        <label for="Secteur">Secteur</label>
-        <select name="Secteur" class="form-control" required>
-            <option value="">Sélectionner un secteur</option>
-            @foreach ($secteurs as $secteur)
-                <option value="{{ $secteur->Id }}">{{ $secteur->Libelle }}</option>
-            @endforeach
-        </select>
+
+    <div class="col-md-6 mb-3">
+        <label>Nombre Membres</label>
+        <input type="number" name="NbrMem" class="form-control" value="{{ old('NbrMem', $cooperative->NbrMem ?? '') }}">
     </div>
-    <div class="form-group">
-        <label for="Categorie">Catégorie</label>
-        <select name="Categorie" class="form-control" required>
-            <option value="">Sélectionner une catégorie</option>
-            @foreach ($categories as $categorie)
-                <option value="{{ $categorie->Id }}">{{ $categorie->Libelle }}</option>
-            @endforeach
-        </select>
+
+    <div class="col-md-6 mb-3">
+        <label>Nombre Collaborateurs</label>
+        <input type="number" name="NbrColl" class="form-control" value="{{ old('NbrColl', $cooperative->NbrColl ?? '') }}">
     </div>
-    <div class="form-group">
-        <label for="Num_Ordre">Numéro d'ordre</label>
-        <input type="number" name="Num_Ordre" class="form-control">
+
+    <div class="col-md-6 mb-3">
+        <label>Date de Création</label>
+        <input type="date" name="DateCreation" class="form-control" value="{{ old('DateCreation', $cooperative->DateCreation ?? '') }}">
     </div>
-    <div class="form-group">
-        <label for="Date_Enre">Date d'enregistrement au bureau d'ordre</label>
-        <input type="date" name="Date_Enre" class="form-control">
+    <div class="col-md-6 mb-3">
+        <label>Adresse</label>
+        <input type="text" name="Adresse" class="form-control" value="{{ old('Adresse', $cooperative->Adresse ?? '') }}">
     </div>
-    <div class="form-group">
-        <label for="Informations">Informations</label>
-        <textarea name="Informations" class="form-control"></textarea>
+
+    <div class="col-md-6 mb-3">
+        <label>Informations</label>
+        <textarea name="Informations" class="form-control">{{ old('Informations', $cooperative->Informations ?? '') }}</textarea>
     </div>
+</div>
     <div class="form-group">
         <label for="DejaBeneficie">Déjà Bénéficié</label>
         <div class="form-check form-check-inline">
@@ -162,16 +135,14 @@
         <label for="Nbr_Benifiement">Nombre de bénificement</label>
         <input type="number" name="Nbr_Benifiement" class="form-control">
     </div> 
-    
-    
     <div class="text-center">
         <button type="submit" class="btn btn-success mt-3" style="margin-top: 20px; width: 20%; height: 45px; border-radius: 10px;">
             Enregistrer
         </button>
     </div>
-    <div class="text-center">
-        <a href="{{ route('cooperatives.index') }}" class="btn btn-secondary" style="margin-top: 20px; width: 20%; height: 45px; border-radius: 10px;">Annuler</a>
-</div>
+    
+    
+   
 </form>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -239,4 +210,8 @@
       });
   });
 </script>
+
+    <div class="text-center">
+        <a href="{{ route('cooperatives.index') }}" class="btn btn-secondary" style="margin-top: 20px; width: 20%; height: 45px; border-radius: 10px;">Annuler</a>
+</div>
 @endsection      

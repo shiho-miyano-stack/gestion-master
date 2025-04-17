@@ -1,104 +1,100 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 style="text-align:center;">Modifier la coopérative</h1>
-
 <div class="container">
-    
-    <form action="{{ route('cooperatives.update', $cooperative) }}" method="POST">
+    <h1 class="mb-4">Modifier la Coopérative</h1>
+    <form action="{{ route('cooperatives.update', $cooperative->Id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="form-group">
-            <label for="NumCop">NumCop</label>
-            <input type="number" class="form-control" id="NumCop" name="NumCop" value="{{ old('NumCop', $cooperative->NumCop) }}" required>
-        </div>
-        <div class="form-group">
-            <label for="NomFr">Nom en Français</label>
-            <input type="text" class="form-control" id="NomFr" name="NomFr" value="{{ old('NomFr', $cooperative->NomFr) }}" required>
-        </div>
-
-        <div class="form-group">
-            <label for="NomAr">Nom en Arabe</label>
-            <input type="text" class="form-control" id="NomAr" name="NomAr" value="{{ old('NomAr', $cooperative->NomAr) }}">
-        </div>
-
-        <div class="form-group">
-            <label for="Telephonne">Téléphone</label>
-            <input type="text" class="form-control" id="Telephonne" name="Telephonne" value="{{ old('Telephonne', $cooperative->Telephonne) }}">
-        </div>
-
-        <div class="form-group">
-            <label for="NumInscrip">Numéro d'Inscription</label>
-            <input type="text" class="form-control" id="NumInscrip" name="NumInscrip" value="{{ old('NumInscrip', $cooperative->NumInscrip) }}">
-        </div>
-
-        <div class="form-group">
-            <label for="DateCreation">Date de Création</label>
-            <input type="date" class="form-control" id="DateCreation" name="DateCreation" value="{{ old('DateCreation', $cooperative->DateCreation) }}">
-        </div>
-
-        <div class="form-group">
-            <label for="NumAnalytique">Numéro Analytique</label>
-            <input type="text" class="form-control" id="NumAnalytique" name="NumAnalytique" value="{{ old('NumAnalytique', $cooperative->NumAnalytique) }}">
-        </div>
-
-        <div class="form-group">
-            <label for="Secteur">Secteur</label>
-            <input type="text" class="form-control" id="Secteur" name="Secteur" value="{{ old('Secteur', $cooperative->Secteur) }}">
-        </div>
-
-        <div class="form-group">
-            <label for="Categorie">Catégorie</label>
-            <input type="text" class="form-control" id="Categorie" name="Categorie" value="{{ old('Categorie', $cooperative->Categorie) }}">
-        </div>
-
-        <div class="form-group">
-            <label for="Adresse">Adresse</label>
-            <input type="text" class="form-control" id="Adresse" name="Adresse" value="{{ old('Adresse', $cooperative->Adresse) }}">
-        </div>
-
-        <div class="form-group">
-            <label for="Informations">Informations</label>
-            <textarea class="form-control" id="Informations" name="Informations">{{ old('Informations', $cooperative->Informations) }}</textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="DejaBeneficie">Déjà Bénéficié</label>
-            <select class="form-control" id="DejaBeneficie" name="DejaBeneficie">
-                <option value="1" {{ $cooperative->DejaBeneficie == 1 ? 'selected' : '' }}>Oui</option>
-                <option value="0" {{ $cooperative->DejaBeneficie == 0 ? 'selected' : '' }}>Non</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="IdComm">Responsable</label>
-            <select class="form-control" id="IdComm" name="IdResp">
-                @foreach ($collaborateurs as $collaborateur)
-                    <option value="{{ $collaborateur->IdColl }}" {{ $cooperative->IdColl== $collaborateur->Id ? 'selected' : '' }}>
-                        {{ $collaborateur->Id }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="IdComm">Commune</label>
-            <select class="form-control" id="IdComm" name="IdComm">
-                @foreach ($communes as $commune)
-                    <option value="{{ $commune->IdComm }}" {{ $cooperative->IdComm == $commune->Id ? 'selected' : '' }}>
-                        {{ $commune->Libelle }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-success mt-3" style="margin-top: 20px; width: 20%; height: 45px; border-radius: 10px;">
-                <i class="bi bi-pencil-square" style="margin-right: 5px;"></i>Mettre à jour
-            </button>
-        </div>
-        <div class="text-center">
-            <a href="{{ route('cooperatives.index') }}" class="btn btn-secondary" style="margin-top: 20px; width: 20%; height: 45px; border-radius: 10px;">Annuler</a>
+        <div class="row">
+    <div class="col-md-6 mb-3">
+        <label>Numéro Coopérative</label>
+        <input type="number" name="NumCop" class="form-control" value="{{ old('NumCop', $cooperative->NumCop ?? '') }}">
     </div>
+
+    <div class="col-md-6 mb-3">
+        <label>Nom Français</label>
+        <input type="text" name="NomFr" class="form-control" required value="{{ old('NomFr', $cooperative->NomFr ?? '') }}">
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label>Nom Arabe</label>
+        <input type="text" name="NomAr" class="form-control" required value="{{ old('NomAr', $cooperative->NomAr ?? '') }}">
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label>Commune</label>
+        <select name="IdComm" class="form-control" required>
+            <option value="">-- Sélectionner --</option>
+            @foreach($communes as $commune)
+                <option value="{{ $commune->Id }}" {{ old('IdComm', $cooperative->IdComm ?? '') == $commune->Id ? 'selected' : '' }}>
+                    {{ $commune->Libelle }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label>Secteur</label>
+        <select name="Secteur" class="form-control">
+            <option value="">-- Sélectionner --</option>
+            @foreach($secteurs as $secteur)
+                <option value="{{ $secteur->Id }}" {{ old('Secteur', $cooperative->Secteur ?? '') == $secteur->Id ? 'selected' : '' }}>
+                    {{ $secteur->Libelle }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label>Catégorie</label>
+        <select name="Categorie" class="form-control">
+            <option value="">-- Sélectionner --</option>
+            @foreach($categories as $categorie)
+                <option value="{{ $categorie->Id }}" {{ old('Categorie', $cooperative->Categorie ?? '') == $categorie->Id ? 'selected' : '' }}>
+                    {{ $categorie->Libelle }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label>Nombre Membres</label>
+        <input type="number" name="NbrMem" class="form-control" value="{{ old('NbrMem', $cooperative->NbrMem ?? '') }}">
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label>Nombre Collaborateurs</label>
+        <input type="number" name="NbrColl" class="form-control" value="{{ old('NbrColl', $cooperative->NbrColl ?? '') }}">
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label>Date de Création</label>
+        <input type="date" name="DateCreation" class="form-control" value="{{ old('DateCreation', $cooperative->DateCreation ?? '') }}">
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label>Déjà Bénéficié</label>
+        <select name="DejaBeneficie" class="form-control">
+            <option value="0" {{ old('DejaBeneficie', $cooperative->DejaBeneficie ?? '') == '0' ? 'selected' : '' }}>Non</option>
+            <option value="1" {{ old('DejaBeneficie', $cooperative->DejaBeneficie ?? '') == '1' ? 'selected' : '' }}>Oui</option>
+        </select>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label>Adresse</label>
+        <input type="text" name="Adresse" class="form-control" value="{{ old('Adresse', $cooperative->Adresse ?? '') }}">
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label>Informations</label>
+        <textarea name="Informations" class="form-control">{{ old('Informations', $cooperative->Informations ?? '') }}</textarea>
+    </div>
+</div>
+<button type="submit" class="btn btn-primary">Mettre à jour</button>
+<div class="text-center">
+<a href="{{ route('cooperatives.index') }}" class="btn btn-secondary" style="margin-top: 20px; width: 20%; height: 45px; border-radius: 10px;">Annuler</a>
+
     </form>
 </div>
 @endsection

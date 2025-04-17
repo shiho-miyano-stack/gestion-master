@@ -1,37 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 style="text-align:center;">Liste des versements</h1>
-
 <div class="container">
-    <a href="{{ route('versements.create') }}" class="btn btn-primary mb-3">Ajouter un Versement</a>
+    <h1>Liste des versements</h1>
+    <a href="{{ route('versements.create') }}" class="btn btn-primary mb-3">Ajouter un versement</a>
 
-    <table border=1 class="table table-bordered">
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Date de Versement</th>
+                <th>Date</th>
                 <th>Montant</th>
-                <th>Subvention</th>
+                <th>Mode Paiement</th>
+                <th>Référence</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($versements as $versement)
-                <tr>
-                    <td>{{ $versement->DateVers }}</td>
-                    <td>{{ $versement->Montant }}</td>
-                    <td>{{ $versement->subvention->Id }}</td>
-                    <td>
-                        <a href="/versements/{{( $versement->id) }}" class="btn btn-info">Voir</a>
-                        <a href="/versements/{{( $versement->id) }}" class="btn btn-warning">Éditer</a>
-                        <form action="/versements/{{( $versement->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger" style="margin-top: 20px; width: 100%; height:45px;border-radius: 10px;">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
+        @foreach ($versements as $v)
+            <tr>
+                <td>{{ $v->DateVers }}</td>
+                <td>{{ $v->Montant }}</td>
+                <td>{{ $v->mode_paiement }}</td>
+                <td>{{ $v->reference_paiement }}</td>
+                <td>
+                    <a href="{{ route('versements.show', $v->Id) }}" class="btn btn-info btn-sm">Voir</a>
+                    <a href="{{ route('versements.edit', $v->Id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    <form action="{{ route('versements.destroy', $v->Id) }}" method="POST" style="display:inline;">
+                        @csrf @method('DELETE')
+                        <button class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ce versement ?')">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 </div>

@@ -27,6 +27,30 @@
                 @endforeach
             </select>
         </div>
+        <div class="mb-3">
+    <label>Début de période</label>
+    <input type="date" name="periode_debut" class="form-control" value="{{ old('periode_debut', $versement->periode_debut ?? '') }}">
+</div>
+
+<div class="mb-3">
+    <label>Fin de période</label>
+    <input type="date" name="periode_fin" class="form-control" value="{{ old('periode_fin', $versement->periode_fin ?? '') }}">
+</div>
+
+<div class="mb-3">
+    <label>Mode de paiement</label>
+    <input type="text" name="mode_paiement" class="form-control" value="{{ old('mode_paiement', $versement->mode_paiement ?? '') }}">
+</div>
+
+<div class="mb-3">
+    <label>Référence de paiement</label>
+    <input type="text" name="reference_paiement" class="form-control" value="{{ old('reference_paiement', $versement->reference_paiement ?? '') }}">
+</div>
+
+<div class="mb-3">
+    <label>Observation</label>
+    <textarea name="observation" class="form-control">{{ old('observation', $versement->observation ?? '') }}</textarea>
+</div>
         <div class="text-center">
             <button type="submit" class="btn btn-success mt-3" style="margin-top: 20px; width: 20%; height: 45px; border-radius: 10px;">
                 Enregistrer

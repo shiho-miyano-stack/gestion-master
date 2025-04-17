@@ -16,6 +16,8 @@ use App\Http\Controllers\DemandeSubventionController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\CollaborateurController;
 
+use App\Http\Controllers\DocumentJointController ;
+
 // Routes resource pour Folder
 Route::resource('folder_subvs', FolderSubvController::class);
 
@@ -63,6 +65,9 @@ Route::resource('subventions', SubventionController::class);
 
 // Routes resource pour Versement
 Route::resource('versements', VersementController::class);
+
+
+Route::resource('documents', DocumentJointController::class);
 
 Route::get('/', function () {
     return view('welcome');
