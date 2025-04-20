@@ -5,8 +5,11 @@
 
 <div class="container">
 
-    <form action="{{ route('demande_subventions.store') }}" method="POST">
+    <form action="{{ route('demande_subventions.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+
+
+  
 
         <div class="mb-3">
             <label >Statut de demande</label>
@@ -39,6 +42,14 @@
             <label>Observation</label>
             <textarea name="Observation" class="form-control"></textarea>
         </div>
+
+
+        <div class="form-group mb-3">
+        <label for="fichier">Fichier :</label>
+        <input type="file" name="fichier" class="form-control">
+    </div>
+
+    
         <div class="text-center">
             <button type="submit" class="btn btn-success mt-3" style="margin-top: 20px; width: 20%; height: 45px; border-radius: 10px;">
                 Enregistrer

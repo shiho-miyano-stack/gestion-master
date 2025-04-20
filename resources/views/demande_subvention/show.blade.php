@@ -11,6 +11,14 @@
             <p><strong>Observation:</strong> {{ $demande->Observation }}</p>
             <p><strong>Coopérative:</strong> {{ $demande->cooperative->NomFr ?? 'Non défini' }}</p>
             <p><strong>Subvention:</strong> {{ $demande->subvention->Type_Sub ?? 'Non défini' }}</p>
+
+            @if ($demande->fichier)
+    <p><strong>Fichier joint :</strong> 
+        <a href="{{ asset('storage/' . $demande->fichier) }}" target="_blank">
+            Télécharger
+        </a>
+    </p>
+@endif
         </div>
     </div>
     <div class="mt-3">

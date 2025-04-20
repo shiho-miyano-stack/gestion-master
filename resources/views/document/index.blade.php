@@ -30,6 +30,15 @@
                 <td>
                     <a href="{{ route('documents.show', $document) }}" class="btn btn-info btn-sm">Voir</a>
                     <a href="{{ route('documents.edit', $document) }}" class="btn btn-warning btn-sm">Modifier</a>
+
+
+
+                    @if($document->chemin_fichier) 
+                        <a href="{{ Storage::url($document->chemin_fichier) }}" class="btn btn-primary btn-sm" download="{{ $document->nom_fichier }}">Télécharger</a>
+                    @endif
+
+
+                    
                     <form action="{{ route('documents.destroy', $document) }}" method="POST" style="display:inline-block;">
                         @csrf @method('DELETE')
                         <button class="btn btn-danger btn-sm" onclick="return confirm('Supprimer ce document ?')">Supprimer</button>

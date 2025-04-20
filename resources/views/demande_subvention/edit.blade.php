@@ -5,7 +5,7 @@
 
 <div class="container">
 
-    <form action="{{ route('demande_subventions.update', $demande->Id) }}" method="POST">
+    <form action="{{ route('demande_subventions.update', $demande->Id) }}" method="POST"  enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -40,6 +40,12 @@
                 @endforeach
             </select>
         </div>
+
+        <div class="form-group mb-3">
+        <label for="fichier">Fichier :</label>
+        <input type="file" name="fichier" class="form-control">
+    </div>
+    
         <div class="text-center">
             <button type="submit" class="btn btn-success mt-3" style="margin-top: 20px; width: 20%; height: 45px; border-radius: 10px;">
                 <i class="bi bi-pencil-square" style="margin-right: 5px;"></i>Mettre à jour

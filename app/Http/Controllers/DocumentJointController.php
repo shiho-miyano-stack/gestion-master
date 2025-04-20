@@ -9,6 +9,7 @@ use App\Models\DocumentJoint;
 
 
 
+
 class DocumentJointController extends Controller
 {
     public function index()
@@ -35,7 +36,7 @@ class DocumentJointController extends Controller
         $fichier = $request->file('document');
         $nom = $fichier->getClientOriginalName();
         $type = $fichier->getClientMimeType();
-        $chemin = $fichier->store('documents');
+        $chemin = $fichier->store('documents', 'public');
 
         DocumentJoint::create([
             'demande_id' => $request->demande_id,
@@ -84,7 +85,7 @@ public function update(Request $request, DocumentJoint $document)
         $fichier = $request->file('document');
         $data['nom_fichier'] = $fichier->getClientOriginalName();
         $data['type_fichier'] = $fichier->getClientMimeType();
-        $data['chemin_fichier'] = $fichier->store('documents');
+        $data['chemin_fichier'] = $fichier->store('documents', 'public');
     }
 
     $document->update($data);

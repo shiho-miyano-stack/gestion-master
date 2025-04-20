@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 use App\Models\DemandeSubvention;
 use App\Models\Cooperative;
 use App\Models\Subvention;
-
 
 class DemandeSubventionController extends Controller
 {
@@ -31,9 +30,16 @@ class DemandeSubventionController extends Controller
             'Observation' => 'nullable|string',
             'IdCoop' => 'required|exists:cooperative,Id',
             'IdSubv' => 'required|exists:subvention,Id',
+            'fichier' => 'nullable|file|max:2048',
         ]);
 
-        DemandeSubvention::create($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('fichier')) {
+            $data['fichier'] = $request->file('fichier')->store('subventions', 'public');
+        }
+
+        DemandeSubvention::create($data);
 
         return redirect()->route('demande_subventions.index')->with('success', 'Demande enregistrée avec succès');
     }
@@ -49,20 +55,33 @@ class DemandeSubventionController extends Controller
         $demande = DemandeSubvention::findOrFail($id);
         $cooperatives = Cooperative::all();
         $subventions = Subvention::all();
-        return view('demande_subvention.edit', compact('demande', 'cooperatives', 'subvention'));
+        return view('demande_subvention.edit', compact('demande', 'cooperatives', 'subventions'));
     }
 
     public function update(Request $request, $id)
     { 
         $request->validate([
-            'Statut' => 'required|string|max:100',
+            'Satut' => 'required|string|max:100',
             'Observation' => 'nullable|string',
             'IdCoop' => 'required|exists:cooperative,Id',
             'IdSubv' => 'required|exists:subvention,Id',
+            'fichier' => 'nullable|file|max:2048',
         ]);
 
         $demande = DemandeSubvention::findOrFail($id);
-        $demande->update($request->all());
+
+        $data = $request->all();
+
+        if ($request->hasFile('fichier')) {
+            // Supprimer l'ancien fichier si existant
+            if ($demande->fichier) {
+                Storage::disk('public')->delete($demande->fichier);
+            }
+
+            $data['fichier'] = $request->file('fichier')->store('subventions', 'public');
+        }
+
+        $demande->update($data);
 
         return redirect()->route('demande_subventions.index')->with('success', 'Demande mise à jour');
     }
@@ -70,8 +89,15 @@ class DemandeSubventionController extends Controller
     public function destroy($id)
     {
         $demande = DemandeSubvention::findOrFail($id);
+
+        // Supprimer le fichier si existant
+        if ($demande->fichier) {
+            Storage::disk('public')->delete($demande->fichier);
+        }
+
         $demande->delete();
 
         return redirect()->route('demande_subventions.index')->with('success', 'Demande supprimée');
     }
 }
+

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('Observation')->nullable();  // Observation (peut être null)
             $table->unsignedBigInteger('IdCoop');  // Référence à la table des coopératives
             $table->unsignedBigInteger('IdSubv');  // Référence à la table des subventions
+            $table->string('fichier')->nullable();
 
             // Ajoute des clés étrangères pour IdCoop et IdSubv
             $table->foreign('IdCoop')->references('id')->on('cooperatives')->onDelete('cascade');

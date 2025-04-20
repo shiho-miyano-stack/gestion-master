@@ -14,7 +14,7 @@ class DemandeSubvention extends Model
     protected $primaryKey = 'Id';
     public $timestamps = false;
 
-    protected $fillable = ['Satut', 'Observation', 'IdCoop', 'IdSubv'];
+    protected $fillable = ['Satut', 'Observation', 'IdCoop', 'IdSubv' , 'fichier'];
     public function cooperative()
 {
     return $this->belongsTo(Cooperative::class, 'IdCoop');
