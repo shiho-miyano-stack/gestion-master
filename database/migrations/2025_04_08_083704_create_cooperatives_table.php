@@ -10,7 +10,6 @@ class CreateCooperativesTable extends Migration
     {
         Schema::create('cooperative', function (Blueprint $table) {
             $table->id();
-
             $table->integer('NumCop')->nullable();
             $table->string('NomFr', 500)->nullable();
             $table->string('NomAr', 500)->nullable();

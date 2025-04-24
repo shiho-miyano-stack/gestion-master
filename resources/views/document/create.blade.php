@@ -24,6 +24,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <a href="{{ route('documents.index') }}" class="btn btn-secondary">Retour</a>
     </form>
 </div>
 @endsection

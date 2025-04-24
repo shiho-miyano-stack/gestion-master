@@ -13,7 +13,7 @@
             <p><strong>ID Demande :</strong> {{ $document->demande_id }}</p>
 
             @if ($document->chemin_fichier && Storage::disk('public')->exists($document->chemin_fichier))
-    <p><strong>Télécharger :</strong> 
+    <p><strong>Voir :</strong> 
         <a href="{{ asset('storage/' . $document->chemin_fichier) }}" target="_blank">
             {{ $document->nom_fichier }}
         </a>

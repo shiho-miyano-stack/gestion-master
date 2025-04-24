@@ -15,8 +15,13 @@ use App\Http\Controllers\FolderCoopController;
 use App\Http\Controllers\DemandeSubventionController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\CollaborateurController;
-
 use App\Http\Controllers\DocumentJointController ;
+use App\Http\Controllers\CollabCoopController ;
+
+
+
+Route::resource('collab_coop', CollabCoopController::class);
+
 
 // Routes resource pour Folder
 Route::resource('folder_subvs', FolderSubvController::class);

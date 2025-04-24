@@ -12,13 +12,33 @@ class Cooperative extends Model
     use HasFactory;
 
     protected $table = 'cooperative';
-
+    protected $primaryKey = 'Id';
+    public $incrementing = true;
     protected $fillable = [
-        'NumCop', 'NomFr', 'NomAr', 'Num_Ordre', 'Date_Enre', 'Telephonne',
-        'NumInscrip', 'DateCreation', 'NumAnalytique', 'NbrMem', 'NbrColl',
-        'Secteur', 'Categorie', 'Adresse', 'Informations', 'IdComm',
-        'DejaBeneficie', 'Nbr_Benifiement'
-    ];
+            'NumCop',
+            'NomFr',
+            'NomAr' ,
+            'Province',
+            'IdComm',
+            'Siege',
+            'Nature_siege',
+            'NumEnre',
+            'Date_Enre',
+            'NumInscripFiscal',
+            'DateCreation',
+            'Telephonne',
+            'Email',
+            'Statut_coop',
+            'Secteur',
+            'Activites_coop',
+            'But_coop',
+            'Capital',
+            'Chiffre_affaire','Equipements','Date_dernier_assemble',
+            'Coord_X','Coord_Y','NbrMemMasc','NbrJeuneMemMasc','AgeJeuneMemMasc','AgeGrandMemMasc','NbrMemFem',
+            'NbrJeuneMemFem','AgeJeuneMemFem', 'AgeGrandMemFem',
+            'NbrMemSs','NbrMemRam','NbrCollMasc','AgeJeuneCollMasc',
+            'AgeGrandCollMasc',
+            'NbrCollFem','AgeJeuneCollFem','AgeGrandCollFem'];
     public $timestamps = false;
 
     // Relations
@@ -32,8 +52,17 @@ class Cooperative extends Model
         return $this->belongsTo(Secteur::class, 'Secteur');
     }
 
-    public function categorie()
-    {
-        return $this->belongsTo(Categorie::class, 'Categorie');
-    }
+   
+    // app/Models/Cooperative.php
+
+public function membres()
+{
+    return $this->hasMany(Membre::class, 'id_coop');
+}
+public function collaborateurs()
+{
+    return $this->belongsToMany(Collaborateur::class, 'collab_coop', 'id_coop', 'id_coll');
+}
+
+
 }

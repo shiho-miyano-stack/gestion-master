@@ -26,6 +26,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Mettre à jour</button>
+        <a href="{{ route('documents.index') }}" class="btn btn-secondary">Retour</a>
     </form>
 </div>
 @endsection

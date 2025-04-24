@@ -19,7 +19,7 @@
             <select name="IdProv" id="IdProv" class="form-control" required>
                 <option value="">Sélectionner une province</option>
                 @foreach($provinces as $province)
-                    <option value="{{ $province->Id }}" {{ $province->Id == old('Id', $commune->Id) ? 'selected' : '' }}>
+                    <option value="{{ $province->Id }}" {{ $province->Libelle == old('Libelle', $commune->Libelle) ? 'selected' : '' }}>
                         {{ $province->Id }}
                     </option>
                 @endforeach

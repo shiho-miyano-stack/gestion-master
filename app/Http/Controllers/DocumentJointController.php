@@ -54,9 +54,6 @@ class DocumentJointController extends Controller
         return view('document.show', compact('document'));
     }
 
-
-
-
     public function edit(DocumentJoint $document)
     {
         $demandes = DemandeSubvention::all(); // pour remplir le dropdown
