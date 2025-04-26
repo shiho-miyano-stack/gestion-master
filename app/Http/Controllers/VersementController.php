@@ -8,11 +8,21 @@ use App\Models\Subvention;
 
 class VersementController extends Controller
 {
-    public function index()
-    {
-        $versements = Versement::with('subvention')->get();
-        return view('versement.index', compact('versements'));
-    }
+    public function index(Request $request)
+{
+    $search = $request->input('search');
+
+    $versements = Versement::with('subvention')
+        ->when($search, function ($query, $search) {
+            return $query->where('Montant', 'like', "%{$search}%")
+                         ->orWhere('mode_paiement', 'like', "%{$search}%");
+                       
+                         })
+        
+        ->paginate(10);
+
+    return view('versement.index', compact('versements'));
+}
 
    
     public function create()

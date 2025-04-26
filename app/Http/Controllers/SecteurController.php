@@ -7,11 +7,19 @@ use App\Models\Secteur;
 
 class SecteurController extends Controller
 {
-    public function index()
-    {
-        $secteurs = Secteur::all();
-        return view('secteur.index', compact('secteurs'));
-    }
+    public function index(Request $request)
+{
+    $search = $request->input('search');
+
+    $secteurs = Secteur::when($search, function ($query, $search) {
+            return $query->where('Libelle', 'like', "%{$search}%");
+               
+        })
+        ->paginate(10); // 👈 pagination à 10 éléments
+
+    return view('secteur.index', compact('secteurs'));
+}
+
 
     // Afficher le formulaire de création d'un secteur
     public function create()

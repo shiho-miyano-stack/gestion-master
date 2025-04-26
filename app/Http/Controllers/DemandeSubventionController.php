@@ -10,9 +10,15 @@ use App\Models\Subvention;
 
 class DemandeSubventionController extends Controller
 {
-    public function index()
-    {
-        $demandes = DemandeSubvention::with(['cooperative', 'subvention'])->get();
+    public function index(Request $request)
+    {    
+        $search = $request->input('search');
+
+        $demandes = DemandeSubvention::with(['cooperative', 'subvention'])
+        ->when($search, function ($query, $search) {
+            return $query->where('Satut', 'like', "%{$search}%");
+        })
+        ->paginate(10); 
         return view('demande_subvention.index', compact('demandes'));
     }
 

@@ -107,6 +107,7 @@
         </thead>
         <tbody>
         @foreach ($cooperatives as $coop)
+        
             <tr>
                 <td>{{ $coop->NomAr }}</td>
                 <td>{{ $coop->NomFr }}</td>
@@ -126,6 +127,21 @@
         @endforeach
         </tbody>
     </table>
+    <div class="d-flex justify-content-center mt-4">
+    <nav>
+        <ul class="pagination">
+            @for ($i = 1; $i <= $cooperatives->lastPage(); $i++)
+                <li class="page-item {{ $i == $cooperatives->currentPage() ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $cooperatives->url($i) }}{{ request()->has('search') ? '&search=' . request('search') : '' }}">
+                        {{ $i }}
+                    </a>
+                </li>
+            @endfor
+        </ul>
+    </nav>
+</div>
+
+
 </div>
 @endsection
 

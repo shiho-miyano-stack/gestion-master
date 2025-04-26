@@ -7,9 +7,17 @@ use App\Models\Subvention;
 
 class SubventionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $subventions = Subvention::all();
+        $search = $request->input('search');
+    
+        $subventions = Subvention::when($search, function ($query, $search) {
+                return $query->where('Type_Sub', 'like', "%{$search}%")
+                             ->orWhere('Montant', 'like', "%{$search}%") ;
+            })
+               
+            ->paginate(10); // 👈 Paginer 10 éléments par page
+    
         return view('subvention.index', compact('subventions'));
     }
 

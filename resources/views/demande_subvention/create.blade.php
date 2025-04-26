@@ -32,8 +32,9 @@
         <div class="mb-3">
             <label>Subvention</label>
             <select name="IdSubv" class="form-control" required>
+                <option value="">Séléctionner la subvention</option>
                 @foreach($subventions as $subv)
-                    <option value="{{ $subv->Id }}">{{ $subv->Id }}</option>
+                    <option value="{{ $subv->Id }}">{{ $subv->Type_Sub }}</option>
                 @endforeach
             </select>
         </div>

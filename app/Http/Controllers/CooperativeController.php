@@ -25,7 +25,7 @@ class CooperativeController extends Controller
                          ->orWhere('Province', 'like', "%{$search}%")
                          ->orWhere('Secteur', 'like', "%{$search}%");
         })
-        ->paginate(100); // Paginate the results, adjust the number as needed
+        ->paginate(10); // Paginate the results, adjust the number as needed
 
     // Return the view with cooperatives data
     return view('cooperative.index', compact('cooperatives'));

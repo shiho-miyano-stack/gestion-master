@@ -26,7 +26,7 @@
                 @foreach($subventions as $subvention)
                      
                 <option value="{{ $subvention->Id }}" {{ $subvention->Id == old('Id', $versement->Id) ? 'selected' : '' }}>
-                        {{ $subvention->Id }}</option>
+                        {{ $subvention->Type_Sub }}</option>
                 @endforeach
             </select>
             </div>
@@ -54,6 +54,11 @@
     <label>Observation</label>
     <textarea name="observation" class="form-control">{{ old('observation', $versement->observation ?? '') }}</textarea>
 </div>
+<div class="text-center">
+            <button type="submit" class="btn btn-success mt-3" style="margin-top: 20px; width: 20%; height: 45px; border-radius: 10px;">
+                <i class="bi bi-pencil-square" style="margin-right: 5px;"></i>Mettre à jour
+            </button>
+        </div>
 </form>
 
 @endsection

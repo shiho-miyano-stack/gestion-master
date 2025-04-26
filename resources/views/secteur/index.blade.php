@@ -5,6 +5,69 @@
 
     <div class="container">
         <a href="{{ route('secteurs.create') }}" class="btn btn-primary mb-3">Ajouter un Secteur</a>
+        <style>
+    .search-bar {
+        display: flex;
+        max-width: 600px;
+        margin: 20px auto;
+        border-radius: 50px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-bar input[type="text"] {
+        flex: 1;
+        padding: 12px 20px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-right: none;
+        border-radius: 50px 0 0 50px;
+        outline: none;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .search-bar input[type="text"]:focus {
+        border-color: #5c6bc0;
+        box-shadow: 0 0 5px rgba(92, 107, 192, 0.5);
+    }
+
+    .search-bar button {
+        padding: 12px 20px;
+        background-color: #333;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 0 50px 50px 0;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .search-bar button:hover {
+        background-color: #5c6bc0;
+    }
+
+    .search-bar input[type="text"]::placeholder {
+        color: #aaa;
+        font-style: italic;
+    }
+</style>
+
+<!-- Barre de recherche pour les secteurs -->
+<div class="position-relative">
+    <form method="GET" action="{{ route('secteurs.index') }}" class="search-bar">
+        <input 
+            type="text" 
+            name="search" 
+            id="search" 
+            value="{{ request('search') }}" 
+            placeholder="Rechercher un secteur..."
+        >
+        <button type="submit">
+            <i class="fa fa-search"></i>
+        </button>
+    </form>
+</div>
+
         <table border=1 class="table table-bordered">
             <thead>
                 <tr>
@@ -29,5 +92,18 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="d-flex justify-content-center mt-4">
+    <nav>
+        <ul class="pagination">
+            @for ($i = 1; $i <= $secteurs->lastPage(); $i++)
+                <li class="page-item {{ $i == $secteurs->currentPage() ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $secteurs->url($i) }}{{ request()->has('search') ? '&search=' . request('search') : '' }}">
+                        {{ $i }}
+                    </a>
+                </li>
+            @endfor
+        </ul>
+    </nav>
+</div>
     </div>
 @endsection
